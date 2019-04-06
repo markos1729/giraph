@@ -15,18 +15,19 @@ import org.apache.giraph.io.formats.PushRelabel.MV;
 public class PushRelabel extends BasicComputation <IntWritable,VV,EV,MV> {
 	@Override
 	public void compute(Vertex <IntWritable,VV,EV> vertex,Iterable <MV> messages) throws IOException {
-		if (getSuperstep()==0) {
-			if (vertex.getId().get()==0) {
+		vertex.setValue(new VV(1,5));
+		//if (getSuperstep()==0) {
+		//	if (vertex.getId().get()==0) {
 				//send initial flow from source together with its id height
 				//int height=vertex.getValue().height;
-				for (Edge <IntWritable,EV> edge : vertex.getEdges()) {
+		//		for (Edge <IntWritable,EV> edge : vertex.getEdges()) {
 					//sendMessage(edge.getTargetVertexId(),new MV(0,height,edge.getValue().capacity));
-					vertex.setEdgeValue(edge.getTargetVertexId(),new EV(0,0));
-					}
-				}
+		//			vertex.setEdgeValue(edge.getTargetVertexId(),new EV(0,0));
+		//			}
+		//		}
 			vertex.voteToHalt();
-			}
-		else vertex.voteToHalt();
+		//	}
+		//else vertex.voteToHalt();
 		/*else {
 			int height=vertex.getValue().height;
 			double excess=vertex.getValue().excess;

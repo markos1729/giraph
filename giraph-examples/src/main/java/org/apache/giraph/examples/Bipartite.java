@@ -53,7 +53,7 @@ public class Bipartite extends BasicComputation <IntWritable,IntWritable,NullWri
 			int match=rand.nextInt(yes);
 
 			int i=0;
-			for (IntWritable message : messages) {
+			for (IntWritable message : messages) if (message.get()>0) {
 				if (i==match) {
 					vertex.setValue(new IntWritable(message.get()));
 					sendMessage(new IntWritable(message.get()),new IntWritable(id));
@@ -72,3 +72,4 @@ public class Bipartite extends BasicComputation <IntWritable,IntWritable,NullWri
 			}
 		}
 	}
+
