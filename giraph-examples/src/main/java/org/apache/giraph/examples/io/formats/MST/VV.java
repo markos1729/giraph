@@ -36,6 +36,6 @@ public class VV implements Writable {
 
 	@Override
     	public String toString() {
-    		return src+"\t"+dst;
+    		return family+"\t"+src+"\t"+dst;
 		}
 	}

@@ -16,15 +16,17 @@ public class SSSP extends BasicComputation <IntWritable,DoubleWritable,DoubleWri
 		//initialize and send source distances
 		if (getSuperstep()==0) {
 			if (vertex.getId().get()==0) {
-				vertex.setValue(new DoubleWritable(0));
+				//vertex.setValue(new DoubleWritable(0));
 				for (Edge <IntWritable,DoubleWritable> edge : vertex.getEdges())
-					sendMessage(edge.getTargetVertexId(),new DoubleWritable(edge.getValue().get()));
-				}	
-			else
-				vertex.setValue(new DoubleWritable(Double.MAX_VALUE));
-			vertex.voteToHalt();
+					vertex.setEdgeValue(edge.getTargetVertexId(),new DoubleWritable(0));
+					//sendMessage(edge.getTargetVertexId(),new DoubleWritable(edge.getValue().get()));
+				}
+			//else
+				//vertex.setValue(new DoubleWritable(Double.MAX_VALUE));
+			//vertex.voteToHalt();
 			}
-
+		vertex.voteToHalt();
+		/*
 		//find minimum of incoming updates
 		double mind=Double.MAX_VALUE;
 		for (DoubleWritable message : messages)
@@ -36,6 +38,6 @@ public class SSSP extends BasicComputation <IntWritable,DoubleWritable,DoubleWri
 			for (Edge <IntWritable,DoubleWritable> edge : vertex.getEdges())
 				sendMessage(edge.getTargetVertexId(),new DoubleWritable(mind+edge.getValue().get()));
 			}
-		vertex.voteToHalt();
+		vertex.voteToHalt();*/
 		}
 	}

@@ -19,8 +19,22 @@ public class MST extends BasicComputation <IntWritable,VV,EV,MV> {
 
 	@Override
 	public void compute(Vertex <IntWritable,VV,EV> vertex,Iterable <MV> messages) throws IOException {
+		if (getSuperstep()==148){
+			vertex.voteToHalt();
+                        return;}
+
 		int id=vertex.getId().get();
 		int step=((IntWritable)getAggregatedValue(STEP)).get();
+
+		if (id==0) {
+			int src=vertex.getValue().src;
+			int dst=vertex.getValue().dst;
+			int fml=vertex.getValue().family;
+			if (step==0) vertex.setValue(new VV(fml+1,src,dst));
+			if (step==3) vertex.setValue(new VV(fml,src+1,dst));
+			if (step==4) vertex.setValue(new VV(fml,src,dst+1));
+			return;
+			}
 
 		if (getSuperstep()==0) {
 			if (id==0) { vertex.voteToHalt(); return; }
@@ -45,7 +59,7 @@ public class MST extends BasicComputation <IntWritable,VV,EV,MV> {
 					vertex.setEdgeValue(edge.getTargetVertexId(),new EV(mcost,true));
 					}
 
-			vertex.voteToHalt();
+			//vertex.voteToHalt();
 			return;
 			}
 
